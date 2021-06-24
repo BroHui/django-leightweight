@@ -37,6 +37,10 @@ def verify_request(func):
         if settings.TOKEN_LIST and (not token or token not in settings.TOKEN_LIST):
             print(f'Unauthorized Request from {request_ip}')
             return HttpResponseForbidden()
+        # get dict
+        get_dict = request.GET.dict()
+        request.param = lambda x: get_dict.get(x, '')
+        
         return func(request, *args, **kwargs)
 
     return returned_wrapper
