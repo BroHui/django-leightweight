@@ -10,7 +10,7 @@ from django.core.wsgi import get_wsgi_application
 
 DEBUG = os.getenv('DEBUG', '0') == '1'
 SECRET_KEY = os.getenv('SECRET_KEY', '{{ secret_key }}')
-ALLOW_HOST = os.getenv('ALLOW_HOST', 'localhost').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 TOKEN_LIST = os.getenv('TOKEN_LIST', '')
 TOKEN_LIST = TOKEN_LIST.split(',') if TOKEN_LIST else []
 if not TOKEN_LIST: print("Run server as NO AUTH mode!")
@@ -18,7 +18,7 @@ settings.configure(
     DEBUG=DEBUG,
     ROOT_URLCONF=__name__,
     SECRET_KEY=SECRET_KEY,
-    ALLOW_HOST=ALLOW_HOST,
+    ALLOWED_HOSTS=ALLOWED_HOSTS,
     MIDDLEWARE_CLASSES=(
         'django.middleware.common.CommonMiddleware',
     ),
@@ -37,6 +37,10 @@ def verify_request(func):
         if settings.TOKEN_LIST and (not token or token not in settings.TOKEN_LIST):
             print(f'Unauthorized Request from {request_ip}')
             return HttpResponseForbidden()
+        # get dict
+        get_dict = request.GET.dict()
+        request.param = lambda x: get_dict.get(x, '')
+        
         return func(request, *args, **kwargs)
 
     return returned_wrapper
