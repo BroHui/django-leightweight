@@ -7,6 +7,7 @@ from django.conf import settings
 from django.urls import path
 from django.http import HttpResponse, HttpResponseForbidden
 from django.core.wsgi import get_wsgi_application
+from django.db import connection
 
 DEBUG = os.getenv('DEBUG', '0') == '1'
 SECRET_KEY = os.getenv('SECRET_KEY', '{{ secret_key }}')
@@ -22,7 +23,17 @@ settings.configure(
     MIDDLEWARE_CLASSES=(
         'django.middleware.common.CommonMiddleware',
     ),
-    TOKEN_LIST=TOKEN_LIST
+    TOKEN_LIST=TOKEN_LIST,
+    DATABASES={
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
+        }
+    }
 )
 """  Simple auth  """
 
