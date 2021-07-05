@@ -9,6 +9,11 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.core.wsgi import get_wsgi_application
 from django.db import connection
 
+from rq import Queue
+from redis import Redis
+redis_conn = Redis(host='redis')
+q = Queue(connection=redis_conn)
+
 DEBUG = os.getenv('DEBUG', '0') == '1'
 SECRET_KEY = os.getenv('SECRET_KEY', '{{ secret_key }}')
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
