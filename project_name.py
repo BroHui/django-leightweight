@@ -56,7 +56,14 @@ def verify_request(func):
         # get dict
         get_dict = request.GET.dict()
         request.param = lambda x: get_dict.get(x, '')
-        
+        # get body
+        request_body = request.body
+        if request_body:
+            try:
+                request.json = json.loads(request_body)
+            except json.decoder.JSONDecodeError:
+                print('+verify_request Error: parse request body to json failed')
+                request.json = {}
         return func(request, *args, **kwargs)
 
     return returned_wrapper
