@@ -19,6 +19,11 @@ Quick Start:
 docker run -it --rm -v $(pwd):/usr/src/app -p 8081:8081 -e TOKEN_LIST=simpletoken lightweight_django
 ```
 
+Debug:
+```
+docker run -it --rm -v .:/app -v ./requirements.txt:/app/requirements.txt -p 8000:8000 django:lts /bin/bash
+```
+
 Thanks to:  
 <Lightweight Django> Copyright © 2015 Julia Elman and Mark Lavin. Published by O’Reilly Media, Inc.  
 Thanks to these guys, Their great works inspire me.
