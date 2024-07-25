@@ -3,7 +3,7 @@ A leightweight django startproject template. Could be suit for API service with 
 
 Requirements:
 1. Python 3.7+
-2. Django 3.2LTS (Should be work with lower or higher version, but I'ver not tested.)
+2. Django 4.2LTS
 
 Quick Start:
 1. Use this template project as your basement.
