@@ -1,5 +1,6 @@
 # leightweight_django
 A leightweight django startproject template. Could be suit for API service with token authorized.
+Django 轻量级应用，只需要一个py文件即可运行。
 
 Requirements:
 1. Python 3.7+
